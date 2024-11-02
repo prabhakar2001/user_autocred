@@ -28,7 +28,12 @@ def get_client_by_email(email):
     client_query = clients_ref.where('email', '==', email).limit(1).stream()
     for client in client_query:
         client_data = client.to_dict()
-        client_data['permissions'] = client_data['permissions'].split(',')
+        # Handle missing fields by setting defaults
+        client_data['permissions'] = client_data.get('permissions', '').split(',') if 'permissions' in client_data else []
+        client_data['username'] = client_data.get('username', '')
+        client_data['password'] = client_data.get('password', '')
+        client_data['expiry_date'] = client_data.get('expiry_date', '2099-12-31')
+        client_data['login_status'] = client_data.get('login_status', 0)
         return client_data
     return None
 
@@ -38,7 +43,12 @@ def get_client_by_username(username):
     client = client_ref.get()
     if client.exists:
         client_data = client.to_dict()
-        client_data['permissions'] = client_data['permissions'].split(',')
+        # Handle missing fields by setting defaults
+        client_data['permissions'] = client_data.get('permissions', '').split(',') if 'permissions' in client_data else []
+        client_data['username'] = client_data.get('username', '')
+        client_data['password'] = client_data.get('password', '')
+        client_data['expiry_date'] = client_data.get('expiry_date', '2099-12-31')
+        client_data['login_status'] = client_data.get('login_status', 0)
         return client_data
     return None
 

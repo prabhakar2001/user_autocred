@@ -1,0 +1,8 @@
+streamlit
+firebase-admin
+pyrebase4
+python_jwt
+gcloud
+sseclient
+requests
+datetime
